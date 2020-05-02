@@ -14,24 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.swt.test;
+@NonNullByDefault
+package de.carne.swt.test.app;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import de.carne.swt.UserApplication;
-import de.carne.swt.test.app.TestAppTest;
-import de.carne.test.swt.DisableIfThreadNotSWTCapable;
-
-/**
- * Test {@linkplain UserApplication} class.
- */
-@DisableIfThreadNotSWTCapable
-class UserApplicationTest extends TestAppTest {
-
-	@Test
-	void testTestUserApplication() {
-		Assertions.assertDoesNotThrow(() -> executeTestScript(getClass().getSimpleName()));
-	}
-
-}
+import org.eclipse.jdt.annotation.NonNullByDefault;

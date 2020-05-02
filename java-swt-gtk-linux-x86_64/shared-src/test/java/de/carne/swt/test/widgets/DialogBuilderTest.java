@@ -34,10 +34,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import de.carne.boot.Application;
+import de.carne.swt.test.app.TestAppTest;
 import de.carne.swt.widgets.FileDialogBuilder;
 import de.carne.swt.widgets.MessageBoxBuilder;
 import de.carne.test.swt.DisableIfThreadNotSWTCapable;
-import de.carne.test.swt.app.TestAppTest;
 import de.carne.test.swt.tester.SWTTest;
 
 /**

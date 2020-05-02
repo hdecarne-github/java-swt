@@ -37,8 +37,7 @@ subprojects {
 		maven { url "https://oss.jfrog.org/libs-release/" }
 	}
 	
-	def projectBaseName = (project.name.startsWith("java-swt") ? "java-swt" : "java-test-swt")
-	def sharedSrcDir = "../${projectBaseName}-gtk-linux-x86_64/shared-src"
+	def sharedSrcDir = "../${rootProject.name}-gtk-linux-x86_64/shared-src"
 
 	sourceSets {
 		main {
@@ -70,7 +69,7 @@ subprojects {
 		}
 	}
 
-	def platformSuffix = project.name.substring(projectBaseName.length())
+	def platformSuffix = project.name.substring(rootProject.name.length())
 	def swtPlatformSuffix = platformSuffix.replace("-", ".")
 
 	dependencies {
@@ -79,20 +78,13 @@ subprojects {
 			exclude(group: "org.eclipse.platform", module: 'org.eclipse.swt.${osgi.platform}')
 		}
 		implementation(group: "de.carne.common", name: "java-default", version: project.javaDefaultVersion)
-		if(projectBaseName.equals("java-swt")) {
-			testImplementation(group: "de.carne.common", name: "java-test", version: project.javaTestVersion)
-			testImplementation(group: "org.jmockit", name: "jmockit", version: project.jmockitVersion)
-		} else {
-			api(group: "de.carne.common", name: "java-test", version: project.javaTestVersion)
-			api(group: "org.jmockit", name: "jmockit", version: project.jmockitVersion)
-			implementation project(":" + project.name.replace("java-test-swt", "java-swt"))
-		}
+		testImplementation(group: "de.carne.common", name: "java-test-swt${platformSuffix}", version: project.javaSwtTestVersion)
 	}
 	
 	jar {
 		manifest {
 			attributes(
-				'Automatic-Module-Name': (projectBaseName.equals("java-swt") ? automaticModuleName : automaticTestModuleName),
+				'Automatic-Module-Name': automaticModuleName,
 				'Created-By': "Gradle ${gradle.gradleVersion} (${System.properties['os.name']}:${System.properties['os.arch']}:${System.properties['os.version']})",
 				'Build-Jdk' : System.properties['java.version'],
 				'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ").format(new Date()),
@@ -105,9 +97,6 @@ subprojects {
 				'X-Module-License': projectLicenseUrl
 			)
 		}
-		// Exclude TestApp from artifact
-		exclude("/de/carne/test/swt/app/**")
-		exclude("/META-INF/de.carne.boot.Application")
 	}
 
 	test {
