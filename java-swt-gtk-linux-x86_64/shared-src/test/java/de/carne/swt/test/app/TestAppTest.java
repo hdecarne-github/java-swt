@@ -52,7 +52,7 @@ public class TestAppTest extends SWTTest {
 	}
 
 	private void checkMessage(Consumer<String> check) {
-		List list = accessShell().accessChild(ControlAccessor::wrapControl, List.class, 1).get();
+		List list = accessShell().accessChild(ControlAccessor::new, List.class, 1).get();
 		@NonNull String[] listSelection = list.getSelection();
 
 		Assertions.assertEquals(1, listSelection.length);
@@ -67,8 +67,8 @@ public class TestAppTest extends SWTTest {
 
 	protected void doSelectCommand() {
 		traceAction();
-		accessShell().accessChild(CoolBarAccessor::wrapCoolBar, CoolBar.class, 0).accessCoolItem(0)
-				.accessControl(ToolBarAccessor::wrapToolBar, ToolBar.class).accessToolItem(2).select();
+		accessShell().accessChild(CoolBarAccessor::new, CoolBar.class, 0).accessItem(0)
+				.accessControl(ToolBarAccessor::new, ToolBar.class).accessItem(2).select();
 		checkMessage(message -> Assertions.assertTrue(message.startsWith("SelectionEvent{")));
 	}
 
