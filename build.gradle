@@ -29,6 +29,17 @@ subprojects {
 	
 	sourceCompatibility = JavaVersion.VERSION_11
 	targetCompatibility = JavaVersion.VERSION_11
+
+	tasks.withType(JavaCompile) {
+		// Caused by org.eclipse.jdt.annotation
+		options.compilerArgs += ["-Xlint:-requires-transitive-automatic"]
+	}
+
+	plugins.withType(JavaPlugin).configureEach {
+		java {
+			modularity.inferModulePath = true
+		}
+	}
 	
 	repositories {
 		if(snapshotBuild) {
@@ -80,13 +91,12 @@ subprojects {
 			exclude(group: "org.eclipse.platform", module: 'org.eclipse.swt.${osgi.platform}')
 		}
 		implementation(group: "de.carne.common", name: "java-default", version: project.javaDefaultVersion)
-		testImplementation(group: "de.carne.common", name: "java-test-swt${platformSuffix}", version: project.javaSwtTestVersion)
+		testImplementation(group: "de.carne.common", name: "java-test-swt${platformSuffix}", version: project.javaTestSwtVersion)
 	}
 	
 	jar {
 		manifest {
 			attributes(
-				'Automatic-Module-Name': automaticModuleName,
 				'Created-By': "Gradle ${gradle.gradleVersion} (${System.properties['os.name']}:${System.properties['os.arch']}:${System.properties['os.version']})",
 				'Build-Jdk' : System.properties['java.version'],
 				'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ").format(new Date()),

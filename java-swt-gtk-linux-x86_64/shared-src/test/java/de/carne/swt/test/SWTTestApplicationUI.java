@@ -14,30 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.swt.test.app;
+package de.carne.swt.test;
 
-import java.util.regex.Pattern;
+import org.eclipse.swt.widgets.Shell;
 
-/**
- * Test application texts.
- */
-@SuppressWarnings("javadoc")
-public final class TestApp {
+import de.carne.swt.graphics.ResourceException;
+import de.carne.swt.widgets.ShellUserInterface;
 
-	private TestApp() {
-		// prevent instantiation
+class SWTTestApplicationUI extends ShellUserInterface {
+
+	SWTTestApplicationUI(Shell shell) {
+		super(shell);
 	}
 
-	// Root shell
-	public static final Pattern ROOT_TEXT_PATTERN = Pattern.compile(TestApp.class.getSimpleName() + ".*");
+	@Override
+	public void open() throws ResourceException {
+		Shell root = root();
 
-	// Root shell menu
-	public static final String ROOT_MENU_SHELL = "Shell";
-	public static final String ROOT_MENU_SHELL_CLOSE = "Close";
-
-	// Widget menus
-	public static final String ROOT_MENU_WIDGETS = "Widgets";
-	public static final String ROOT_MENU_WIDGETS_ABOUTINFO = "Aboutinfo...";
-	public static final String ROOT_MENU_WIDGETS_LOGVIEW = "Logview...";
+		root.layout();
+		root.open();
+	}
 
 }

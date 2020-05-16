@@ -19,19 +19,28 @@ package de.carne.swt.test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import de.carne.boot.Application;
 import de.carne.swt.UserApplication;
-import de.carne.swt.test.app.TestAppTest;
 import de.carne.test.swt.DisableIfThreadNotSWTCapable;
+import de.carne.test.swt.tester.SWTTest;
 
 /**
  * Test {@linkplain UserApplication} class.
  */
 @DisableIfThreadNotSWTCapable
-class UserApplicationTest extends TestAppTest {
+class UserApplicationTest extends SWTTest {
 
 	@Test
 	void testTestUserApplication() {
-		Assertions.assertDoesNotThrow(() -> executeTestScript(getClass().getSimpleName()));
+		Script script = script(Application::main);
+
+		script.add(this::doClose);
+		script.execute();
+		Assertions.assertTrue(script.passed());
+	}
+
+	private void doClose() {
+		accessShell().get().close();
 	}
 
 }

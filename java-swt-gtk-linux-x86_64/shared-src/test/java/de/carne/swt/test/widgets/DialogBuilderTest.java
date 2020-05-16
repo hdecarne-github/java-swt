@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import de.carne.boot.Application;
-import de.carne.swt.test.app.TestAppTest;
 import de.carne.swt.widgets.FileDialogBuilder;
 import de.carne.swt.widgets.MessageBoxBuilder;
 import de.carne.test.swt.DisableIfThreadNotSWTCapable;
@@ -44,11 +43,11 @@ import de.carne.test.swt.tester.SWTTest;
  * Test {@linkplain SWTTest} class - Native dialog mocks.
  */
 @DisableIfThreadNotSWTCapable
-class DialogBuilderTest extends TestAppTest {
+class DialogBuilderTest extends SWTTest {
 
 	@Test
 	void testStartStop() {
-		Script script = script(Application::run).args(getClass().getSimpleName());
+		Script script = script(Application::main);
 
 		script.add(this::doMessageBox);
 		script.add(this::doFileDialog);
@@ -56,7 +55,9 @@ class DialogBuilderTest extends TestAppTest {
 		script.add(this::doPrintDialog);
 		script.add(this::doColorDialog);
 		script.add(this::doFontDialog);
-		script.add(this::doClose).execute();
+		script.add(this::doClose);
+		script.execute();
+		Assertions.assertTrue(script.passed());
 	}
 
 	private void doMessageBox() {
@@ -152,6 +153,10 @@ class DialogBuilderTest extends TestAppTest {
 		Assertions.assertNotNull(fontDialogResult);
 		Assertions.assertEquals(testFontData, fontDialogResult);
 		Assertions.assertNull(fontDialog.open());
+	}
+
+	private void doClose() {
+		accessShell().get().close();
 	}
 
 }

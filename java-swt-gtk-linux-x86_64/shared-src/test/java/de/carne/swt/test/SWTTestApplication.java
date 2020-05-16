@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.swt.test.app;
+package de.carne.swt.test;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -28,9 +28,9 @@ import de.carne.util.cmdline.CmdLineProcessor;
 import de.carne.util.logging.Logs;
 
 /**
- * Test application main class.
+ * SWT Test Application
  */
-public class TestAppMain extends UserApplication implements ApplicationMain {
+public class SWTTestApplication extends UserApplication implements ApplicationMain {
 
 	@Override
 	public int run(String[] args) {
@@ -63,7 +63,7 @@ public class TestAppMain extends UserApplication implements ApplicationMain {
 
 	@Override
 	protected ShellUserInterface setupUserInterface(Display display) throws ResourceException {
-		return new TestAppUI(new Shell(display), getCmdLine().toString());
+		return new SWTTestApplicationUI(new Shell(display));
 	}
 
 }
