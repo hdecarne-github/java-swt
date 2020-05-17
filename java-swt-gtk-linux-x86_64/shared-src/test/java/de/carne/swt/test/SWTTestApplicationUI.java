@@ -20,10 +20,12 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.printing.PrinterData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
@@ -34,6 +36,7 @@ import de.carne.swt.layout.GridLayoutBuilder;
 import de.carne.swt.platform.PlatformIntegration;
 import de.carne.swt.widgets.ColorDialogBuilder;
 import de.carne.swt.widgets.ControlBuilder;
+import de.carne.swt.widgets.CoolBarBuilder;
 import de.carne.swt.widgets.DirectoryDialogBuilder;
 import de.carne.swt.widgets.FileDialogBuilder;
 import de.carne.swt.widgets.FontDialogBuilder;
@@ -45,6 +48,7 @@ import de.carne.swt.widgets.ShellUserInterface;
 import de.carne.swt.widgets.ToolBarBuilder;
 import de.carne.swt.widgets.aboutinfo.AboutInfoDialog;
 import de.carne.swt.widgets.logview.LogViewDialog;
+import de.carne.util.Check;
 import de.carne.util.Exceptions;
 import de.carne.util.Late;
 import de.carne.util.ManifestInfos;
@@ -89,6 +93,11 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		setupDialogBar(dialogBarBuilder);
 		GridLayoutBuilder.data().align(SWT.FILL, SWT.TOP).grab(true, false).apply(dialogBarBuilder);
 
+		CoolBarBuilder coolBarBuilder = CoolBarBuilder.horizontal(rootBuilder, SWT.FLAT);
+
+		setupCoolBar(coolBarBuilder);
+		GridLayoutBuilder.data().align(SWT.FILL, SWT.TOP).grab(true, false).apply(coolBarBuilder);
+
 		ControlBuilder<Label> messageListLabelBuilder = rootBuilder.addLabelChild(SWT.LEFT);
 
 		messageListLabelBuilder.get().setText("Messages");
@@ -127,6 +136,18 @@ class SWTTestApplicationUI extends ShellUserInterface {
 				.onSelected(this::onFontDialogSelected);
 		dialogBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.TOOL_ITEM_PRINT)
 				.onSelected(this::onPrintDialogSelected);
+	}
+
+	private void setupCoolBar(CoolBarBuilder coolBarBuilder) {
+		coolBarBuilder.addItem(SWT.NONE);
+		coolBarBuilder.withControl(coolBarBuilder.addButtonChild(SWT.PUSH).withText(SWTTestApplication.BUTTON_LEFT)
+				.onSelected(this::onCoolButtonSelected));
+		coolBarBuilder.addItem(SWT.NONE);
+		coolBarBuilder.withControl(coolBarBuilder.addButtonChild(SWT.PUSH).withText(SWTTestApplication.BUTTON_MIDDLE)
+				.onSelected(this::onCoolButtonSelected));
+		coolBarBuilder.addItem(SWT.NONE);
+		coolBarBuilder.withControl(coolBarBuilder.addButtonChild(SWT.PUSH).withText(SWTTestApplication.BUTTON_RIGHT)
+				.onSelected(this::onCoolButtonSelected));
 	}
 
 	private void onAboutSelected() {
@@ -228,6 +249,10 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		PrinterData printer = printDialog.open();
 
 		addMessage("PrintDialog: " + printer);
+	}
+
+	private void onCoolButtonSelected(SelectionEvent evt) {
+		addMessage("CoolButton selected: " + Check.isInstanceOf(evt.widget, Button.class).getText());
 	}
 
 	private Image[] getAppIcons() {
