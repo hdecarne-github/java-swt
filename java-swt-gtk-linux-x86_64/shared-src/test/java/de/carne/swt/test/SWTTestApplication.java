@@ -32,6 +32,78 @@ import de.carne.util.logging.Logs;
  */
 public class SWTTestApplication extends UserApplication implements ApplicationMain {
 
+	/**
+	 * Root shell title.
+	 */
+	public final static String ROOT_TITLE = "root";
+	/**
+	 * Progress dialog title.
+	 */
+	public final static String PROGRESS_TITLE = "progress";
+
+	/**
+	 * Application menu.
+	 */
+	public final static String MENU_APPLICATION = "Application";
+	/**
+	 * Application - Quit menu item.
+	 */
+	public final static String MENU_ITEM_QUIT = "Quit";
+	/**
+	 * Test menu.
+	 */
+	public final static String MENU_TEST = "Test";
+	/**
+	 * Test - About menu item.
+	 */
+	public final static String MENU_ITEM_ABOUT = "About";
+	/**
+	 * Test - Logs menu item.
+	 */
+	public final static String MENU_ITEM_LOGS = "Logs";
+
+	/**
+	 * Message tool item.
+	 */
+	public final static String TOOL_ITEM_MESSAGE = "Message";
+	/**
+	 * Color tool item.
+	 */
+	public final static String TOOL_ITEM_COLOR = "Color";
+	/**
+	 * Directory tool item.
+	 */
+	public final static String TOOL_ITEM_DIRECTORY = "Directory";
+	/**
+	 * File tool item.
+	 */
+	public final static String TOOL_ITEM_FILE = "File";
+	/**
+	 * Font tool item.
+	 */
+	public final static String TOOL_ITEM_FONT = "Font";
+	/**
+	 * Print tool item.
+	 */
+	public final static String TOOL_ITEM_PRINT = "Print";
+
+	/**
+	 * Left button test.
+	 */
+	public final static String BUTTON_LEFT = "Left button";
+	/**
+	 * Middle button test.
+	 */
+	public final static String BUTTON_MIDDLE = "Middle button";
+	/**
+	 * Right button test.
+	 */
+	public final static String BUTTON_RIGHT = "Right button";
+	/**
+	 * Close button test.
+	 */
+	public final static String BUTTON_CLOSE = "Close";
+
 	@Override
 	public int run(String[] args) {
 		int status = -1;

@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public abstract class ResourceTracker {
 
-	private static final Map<Device, ResourceTracker> deviceTracker = new HashMap<>();
+	private static final Map<Device, ResourceTracker> DEVICE_TRACKER = new HashMap<>();
 
 	private final Map<Object, Color> colorCache = new HashMap<>();
 	private final Map<Object, Font> fontCache = new HashMap<>();
@@ -57,7 +57,7 @@ public abstract class ResourceTracker {
 	 * @param device the {@linkplain Device} to remove.
 	 */
 	protected static void removeDevice(Device device) {
-		deviceTracker.remove(device);
+		DEVICE_TRACKER.remove(device);
 	}
 
 	/**
@@ -244,7 +244,7 @@ public abstract class ResourceTracker {
 	 * @return the requested {@linkplain ResourceTracker} instance.
 	 */
 	public static ResourceTracker forDevice(Device device) {
-		return deviceTracker.computeIfAbsent(device, DeviceResourceTracker::new);
+		return DEVICE_TRACKER.computeIfAbsent(device, DeviceResourceTracker::new);
 	}
 
 	/**
