@@ -16,6 +16,7 @@
  */
 package de.carne.swt.widgets;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -66,6 +67,17 @@ public class ColorDialogBuilder extends DialogBuilder<ColorDialog> {
 	public ColorDialogBuilder withRgbs(RGB[] rgbs) {
 		get().setRGBs(rgbs);
 		return this;
+	}
+
+	/**
+	 * Opens the color dialog.
+	 *
+	 * @return the selected color or {@code null} if the selection has been cancelled.
+	 * @see ColorDialog#open()
+	 */
+	@Nullable
+	public RGB open() {
+		return get().open();
 	}
 
 }

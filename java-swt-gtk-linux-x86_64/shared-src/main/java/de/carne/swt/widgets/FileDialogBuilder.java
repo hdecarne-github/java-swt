@@ -154,4 +154,15 @@ public class FileDialogBuilder extends DialogBuilder<FileDialog> {
 		return this;
 	}
 
+	/**
+	 * Opens the file dialog.
+	 *
+	 * @return the selected file or {@code null} if the selection has been cancelled.
+	 * @see FileDialog#open()
+	 */
+	@Nullable
+	public String open() {
+		return get().open();
+	}
+
 }

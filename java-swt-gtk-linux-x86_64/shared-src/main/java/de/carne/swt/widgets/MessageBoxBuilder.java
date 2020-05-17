@@ -95,4 +95,14 @@ public class MessageBoxBuilder extends DialogBuilder<MessageBox> {
 		return this;
 	}
 
+	/**
+	 * Opens the message box dialog.
+	 *
+	 * @return the selected button or {@code SWT#CANCEL} if the selection has been cancelled.
+	 * @see MessageBox#open()
+	 */
+	public int open() {
+		return get().open();
+	}
+
 }

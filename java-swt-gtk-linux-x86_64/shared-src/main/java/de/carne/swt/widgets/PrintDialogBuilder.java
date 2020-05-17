@@ -16,6 +16,7 @@
  */
 package de.carne.swt.widgets;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.printing.PrintDialog;
 import org.eclipse.swt.printing.PrinterData;
 import org.eclipse.swt.widgets.Shell;
@@ -103,6 +104,17 @@ public class PrintDialogBuilder extends DialogBuilder<PrintDialog> {
 	public PrintDialogBuilder withStartPage(int startPage) {
 		get().setStartPage(startPage);
 		return this;
+	}
+
+	/**
+	 * Opens the printer dialog.
+	 *
+	 * @return the selected print or {@code null} if the selection has been cancelled.
+	 * @see PrintDialog#open()
+	 */
+	@Nullable
+	public PrinterData open() {
+		return get().open();
 	}
 
 }

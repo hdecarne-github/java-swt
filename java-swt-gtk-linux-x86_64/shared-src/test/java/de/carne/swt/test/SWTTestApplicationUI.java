@@ -20,7 +20,10 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.printing.PrinterData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
@@ -29,10 +32,17 @@ import de.carne.swt.graphics.ResourceException;
 import de.carne.swt.graphics.ResourceTracker;
 import de.carne.swt.layout.GridLayoutBuilder;
 import de.carne.swt.platform.PlatformIntegration;
+import de.carne.swt.widgets.ColorDialogBuilder;
 import de.carne.swt.widgets.ControlBuilder;
+import de.carne.swt.widgets.DirectoryDialogBuilder;
+import de.carne.swt.widgets.FileDialogBuilder;
+import de.carne.swt.widgets.FontDialogBuilder;
 import de.carne.swt.widgets.MenuBuilder;
+import de.carne.swt.widgets.MessageBoxBuilder;
+import de.carne.swt.widgets.PrintDialogBuilder;
 import de.carne.swt.widgets.ShellBuilder;
 import de.carne.swt.widgets.ShellUserInterface;
+import de.carne.swt.widgets.ToolBarBuilder;
 import de.carne.swt.widgets.aboutinfo.AboutInfoDialog;
 import de.carne.swt.widgets.logview.LogViewDialog;
 import de.carne.util.Exceptions;
@@ -74,6 +84,11 @@ class SWTTestApplicationUI extends ShellUserInterface {
 
 		setupMenuBar();
 
+		ToolBarBuilder dialogBarBuilder = ToolBarBuilder.horizontal(rootBuilder, SWT.FLAT);
+
+		setupDialogBar(dialogBarBuilder);
+		GridLayoutBuilder.data().align(SWT.FILL, SWT.TOP).grab(true, false).apply(dialogBarBuilder);
+
 		ControlBuilder<Label> messageListLabelBuilder = rootBuilder.addLabelChild(SWT.LEFT);
 
 		messageListLabelBuilder.get().setText("Messages");
@@ -99,6 +114,21 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		menuBarBuilder.endMenu();
 	}
 
+	private void setupDialogBar(ToolBarBuilder dialogBarBuilder) {
+		dialogBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.TOOL_ITEM_MESSAGE)
+				.onSelected(this::onMessageBoxSelected);
+		dialogBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.TOOL_ITEM_COLOR)
+				.onSelected(this::onColorDialogSelected);
+		dialogBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.TOOL_ITEM_DIRECTORY)
+				.onSelected(this::onDirectoryDialogSelected);
+		dialogBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.TOOL_ITEM_FILE)
+				.onSelected(this::onFileDialogSelected);
+		dialogBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.TOOL_ITEM_FONT)
+				.onSelected(this::onFontDialogSelected);
+		dialogBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.TOOL_ITEM_PRINT)
+				.onSelected(this::onPrintDialogSelected);
+	}
+
 	private void onAboutSelected() {
 		try {
 			AboutInfoDialog dialog = AboutInfoDialog.build(root(),
@@ -120,6 +150,84 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		} catch (ResourceException e) {
 			throw Exceptions.toRuntime(e);
 		}
+	}
+
+	private void onMessageBoxSelected() {
+		MessageBoxBuilder messageBox = MessageBoxBuilder.build(root(), SWT.ICON_INFORMATION | SWT.CLOSE);
+
+		messageBox.withText("MessageBox").withMessage("Message");
+
+		int result = messageBox.open();
+
+		addMessage("MessageBox: " + result);
+	}
+
+	private static final RGB DEFAULT_COLOR = new RGB(1, 2, 3);
+	private static final RGB[] DEFAULT_COLORS = new RGB[] { DEFAULT_COLOR, new RGB(3, 2, 1) };
+
+	private void onColorDialogSelected() {
+		ColorDialogBuilder colorDialog = ColorDialogBuilder.choose(root());
+
+		colorDialog.withText("ColorDialog");
+		colorDialog.withRgb(DEFAULT_COLOR);
+		colorDialog.withRgbs(DEFAULT_COLORS);
+
+		RGB color = colorDialog.open();
+
+		addMessage("ColorDialog: " + color);
+	}
+
+	private void onDirectoryDialogSelected() {
+		DirectoryDialogBuilder directoryDialog = DirectoryDialogBuilder.choose(root());
+
+		directoryDialog.withText("DirectoryDialog");
+		directoryDialog.withMessage("Message").withFilterPath("*");
+
+		String directory = directoryDialog.open();
+
+		addMessage("DirectoryDialog: " + directory);
+	}
+
+	private void onFileDialogSelected() {
+		FileDialogBuilder fileDialog = FileDialogBuilder.save(root());
+
+		fileDialog.withText("FileDialog");
+		fileDialog.withFileName("file.txt");
+		fileDialog.withFilterPath("*");
+		fileDialog.withFilter("*|All|*.txt|Text");
+		fileDialog.withFilterIndex(1);
+		fileDialog.withOverwrite(false);
+
+		String file = fileDialog.open();
+
+		addMessage("FileDialog: " + file);
+	}
+
+	private void onFontDialogSelected() {
+		FontDialogBuilder fontDialog = FontDialogBuilder.choose(root());
+
+		fontDialog.withText("FontDialog");
+		fontDialog.withFontList(root().getDisplay().getFontList(null, true));
+		fontDialog.withRgb(DEFAULT_COLOR);
+
+		FontData font = fontDialog.open();
+
+		addMessage("FontDialog: " + font);
+	}
+
+	private void onPrintDialogSelected() {
+		PrintDialogBuilder printDialog = PrintDialogBuilder.choose(root());
+
+		printDialog.withText("PrintDialog");
+		printDialog.withPrinterData(new PrinterData());
+		printDialog.withScope(PrinterData.PAGE_RANGE);
+		printDialog.withStartPage(1);
+		printDialog.withEndPage(2);
+		printDialog.withPrintToFile(false);
+
+		PrinterData printer = printDialog.open();
+
+		addMessage("PrintDialog: " + printer);
 	}
 
 	private Image[] getAppIcons() {

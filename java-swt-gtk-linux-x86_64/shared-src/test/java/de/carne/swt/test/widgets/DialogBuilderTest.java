@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020 Holger de Carne and contributors, All Rights Reserved.
+ * Copyright (c) 2007-2020 Holger de Carne and contributors, All Rights Reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,147 +16,62 @@
  */
 package de.carne.swt.test.widgets;
 
-import java.nio.file.Paths;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.printing.PrintDialog;
-import org.eclipse.swt.printing.PrinterData;
-import org.eclipse.swt.widgets.ColorDialog;
-import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.FontDialog;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import de.carne.boot.Application;
-import de.carne.swt.widgets.FileDialogBuilder;
-import de.carne.swt.widgets.MessageBoxBuilder;
 import de.carne.test.swt.DisableIfThreadNotSWTCapable;
 import de.carne.test.swt.tester.SWTTest;
+import de.carne.test.swt.tester.accessor.ToolBarAccessor;
 
 /**
- * Test {@linkplain SWTTest} class - Native dialog mocks.
+ * Test {@linkplain de.carne.swt.widgets.DialogBuilder} class and derived ones.
  */
 @DisableIfThreadNotSWTCapable
 class DialogBuilderTest extends SWTTest {
 
 	@Test
-	void testStartStop() {
+	void testTestUserApplication() {
 		Script script = script(Application::main);
 
 		script.add(this::doMessageBox);
-		script.add(this::doFileDialog);
-		script.add(this::doDirectoryDialog);
-		script.add(this::doPrintDialog);
 		script.add(this::doColorDialog);
+		script.add(this::doDirectoryDialog);
+		script.add(this::doFileDialog);
 		script.add(this::doFontDialog);
+		script.add(this::doPrintDialog);
 		script.add(this::doClose);
 		script.execute();
 		Assertions.assertTrue(script.passed());
 	}
 
 	private void doMessageBox() {
-		traceAction();
-
-		mockMessageBox().result(SWT.NO);
-
-		String mbText = getClass().getSimpleName();
-		String mbMessage = "Guess the answer for this test?";
-
-		MessageBox messageBox = MessageBoxBuilder.build(accessShell().get(), SWT.ICON_QUESTION | SWT.YES | SWT.NO)
-				.withText(mbText).withMessage(mbMessage).get();
-
-		Assertions.assertEquals(mbText, messageBox.getText());
-		Assertions.assertEquals(mbMessage, messageBox.getMessage());
-		Assertions.assertEquals(SWT.NO, messageBox.open());
-		Assertions.assertEquals(SWT.CANCEL, messageBox.open());
-	}
-
-	private void doFileDialog() {
-		traceAction();
-
-		String testFileName = getClass().getSimpleName() + ".java";
-
-		mockFileDialog().result(testFileName);
-
-		String fdFileName = getClass().getSimpleName() + ".class";
-		String fdText = "Open file";
-
-		FileDialog fileDialog = FileDialogBuilder.open(accessShell().get()).withFileName(fdFileName).withText(fdText)
-				.get();
-
-		Assertions.assertEquals(fdFileName, fileDialog.getFileName());
-		Assertions.assertEquals(fdText, fileDialog.getText());
-		Assertions.assertEquals(testFileName, fileDialog.open());
-		Assertions.assertNull(fileDialog.open());
-	}
-
-	private void doDirectoryDialog() {
-		traceAction();
-
-		String testDirectoryName = Paths.get(".").toAbsolutePath().toString();
-
-		mockDirectoryDialog().result(testDirectoryName);
-
-		DirectoryDialog directoryDialog = new DirectoryDialog(accessShell().get(), SWT.OPEN);
-
-		Assertions.assertEquals(testDirectoryName, directoryDialog.open());
-		Assertions.assertNull(directoryDialog.open());
-	}
-
-	private void doPrintDialog() {
-		traceAction();
-
-		PrinterData testPrinterData = new PrinterData("generic", "dummy");
-
-		mockPrintDialog().result(testPrinterData);
-
-		PrintDialog printDialog = new PrintDialog(accessShell().get());
-		PrinterData printDialogResult = printDialog.open();
-
-		Assertions.assertNotNull(printDialogResult);
-		Assertions.assertEquals(testPrinterData.toString(), printDialogResult.toString());
-		Assertions.assertNull(printDialog.open());
+		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(0).select();
 	}
 
 	private void doColorDialog() {
-		traceAction();
+		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(1).select();
+	}
 
-		RGB testRGB = new RGB(1, 2, 3);
+	private void doDirectoryDialog() {
+		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(2).select();
+	}
 
-		mockColorDialog().result(testRGB);
-
-		ColorDialog colorDialog = new ColorDialog(accessShell().get());
-		RGB colorDialogResult = colorDialog.open();
-
-		Assertions.assertEquals(testRGB, colorDialogResult);
-		Assertions.assertNull(colorDialog.open());
+	private void doFileDialog() {
+		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(3).select();
 	}
 
 	private void doFontDialog() {
-		traceAction();
+		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(4).select();
+	}
 
-		Shell shell = accessShell().get();
-		Display display = shell.getDisplay();
-		FontData testFontData = display.getSystemFont().getFontData()[0];
-
-		mockFontDialog().result(testFontData);
-
-		FontDialog fontDialog = new FontDialog(shell);
-		FontData fontDialogResult = fontDialog.open();
-
-		Assertions.assertNotNull(fontDialogResult);
-		Assertions.assertEquals(testFontData, fontDialogResult);
-		Assertions.assertNull(fontDialog.open());
+	private void doPrintDialog() {
+		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(5).select();
 	}
 
 	private void doClose() {
-		accessShell().get().close();
+		accessShell().close();
 	}
 
 }

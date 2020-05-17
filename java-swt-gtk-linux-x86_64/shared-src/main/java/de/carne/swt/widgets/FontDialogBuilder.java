@@ -16,6 +16,7 @@
  */
 package de.carne.swt.widgets;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.FontDialog;
@@ -79,6 +80,17 @@ public class FontDialogBuilder extends DialogBuilder<FontDialog> {
 	public FontDialogBuilder withFontList(FontData[] fontData) {
 		get().setFontList(fontData);
 		return this;
+	}
+
+	/**
+	 * Opens the font dialog.
+	 *
+	 * @return the selected font or {@code null} if the selection has been cancelled.
+	 * @see FontDialog#open()
+	 */
+	@Nullable
+	public FontData open() {
+		return get().open();
 	}
 
 }
