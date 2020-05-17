@@ -55,11 +55,11 @@ class AboutInfoTest extends SWTTest {
 	}
 
 	private void doCloseAbout(ShellAccessor about) {
-		about.get().close();
+		about.close();
 	}
 
 	private void doClose() {
-		accessShell().get().close();
+		accessShell().close();
 	}
 
 }
