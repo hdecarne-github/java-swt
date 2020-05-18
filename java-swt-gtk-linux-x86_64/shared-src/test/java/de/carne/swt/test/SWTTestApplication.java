@@ -61,6 +61,10 @@ public class SWTTestApplication extends UserApplication implements ApplicationMa
 	 * Test - Logs menu item.
 	 */
 	public final static String MENU_ITEM_LOGS = "Logs";
+	/**
+	 * Test - Notification menu item.
+	 */
+	public final static String MENU_ITEM_NOTIFICATION = "Notification";
 
 	/**
 	 * Message tool item.

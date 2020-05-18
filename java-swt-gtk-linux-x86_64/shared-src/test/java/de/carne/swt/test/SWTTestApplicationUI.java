@@ -48,6 +48,8 @@ import de.carne.swt.widgets.ShellUserInterface;
 import de.carne.swt.widgets.ToolBarBuilder;
 import de.carne.swt.widgets.aboutinfo.AboutInfoDialog;
 import de.carne.swt.widgets.logview.LogViewDialog;
+import de.carne.swt.widgets.notification.Notification;
+import de.carne.swt.widgets.runtimeinfo.RuntimeInfo;
 import de.carne.util.Check;
 import de.carne.util.Exceptions;
 import de.carne.util.Late;
@@ -98,6 +100,10 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		setupCoolBar(coolBarBuilder);
 		GridLayoutBuilder.data().align(SWT.FILL, SWT.TOP).grab(true, false).apply(coolBarBuilder);
 
+		ControlBuilder<RuntimeInfo> runtimeInfoBuilder = rootBuilder.addControlChild(RuntimeInfo.class, SWT.BORDER);
+
+		GridLayoutBuilder.data().align(SWT.FILL, SWT.TOP).grab(true, false).apply(runtimeInfoBuilder);
+
 		ControlBuilder<Label> messageListLabelBuilder = rootBuilder.addLabelChild(SWT.LEFT);
 
 		messageListLabelBuilder.get().setText("Messages");
@@ -120,6 +126,8 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		menuBarBuilder.beginMenu();
 		menuBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.MENU_ITEM_ABOUT).onSelected(this::onAboutSelected);
 		menuBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.MENU_ITEM_LOGS).onSelected(this::onLogsSelected);
+		menuBarBuilder.addItem(SWT.PUSH).withText(SWTTestApplication.MENU_ITEM_NOTIFICATION)
+				.onSelected(this::onNotificationSelected);
 		menuBarBuilder.endMenu();
 	}
 
@@ -171,6 +179,12 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		} catch (ResourceException e) {
 			throw Exceptions.toRuntime(e);
 		}
+	}
+
+	private void onNotificationSelected() {
+		Notification error = Notification.error(root()).withText("Error");
+
+		error.open();
 	}
 
 	private void onMessageBoxSelected() {

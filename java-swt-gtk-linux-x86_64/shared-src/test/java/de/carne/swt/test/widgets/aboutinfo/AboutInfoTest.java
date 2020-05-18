@@ -34,7 +34,7 @@ import de.carne.test.swt.tester.accessor.ShellAccessor;
 class AboutInfoTest extends SWTTest {
 
 	@Test
-	void testTestUserApplication() {
+	void testAboutInfo() {
 		Script script = script(Application::main);
 
 		script.add(this::doOpenAbout, true);

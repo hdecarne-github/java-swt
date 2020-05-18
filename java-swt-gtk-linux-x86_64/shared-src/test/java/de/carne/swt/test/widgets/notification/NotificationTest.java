@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.swt.test.widgets.logview;
+package de.carne.swt.test.widgets.notification;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,35 +23,30 @@ import de.carne.boot.Application;
 import de.carne.swt.test.SWTTestApplication;
 import de.carne.test.swt.DisableIfThreadNotSWTCapable;
 import de.carne.test.swt.tester.SWTTest;
-import de.carne.test.swt.tester.accessor.ShellAccessor;
 
 /**
- * Test {@linkplain de.carne.swt.widgets.logview.LogViewDialog} class.
+ * Test {@linkplain de.carne.swt.widgets.notification.Notification} class.
  */
 @DisableIfThreadNotSWTCapable
-class LogViewTest extends SWTTest {
+class NotificationTest extends SWTTest {
 
 	@Test
-	void testLogView() {
+	void testNotification() {
 		Script script = script(Application::main);
 
-		script.add(this::doOpenLogs, true);
-		script.add(this::doWaitLogs, this::doCloseLogs);
+		script.add(this::doOpenNotification);
+		script.add(this::doCloseNotification);
 		script.add(this::doClose);
 		script.execute();
 		Assertions.assertTrue(script.passed());
 	}
 
-	private void doOpenLogs() {
-		accessShell().accessMenuBar().accessItem(SWTTestApplication.MENU_ITEM_LOGS).select();
+	private void doOpenNotification() {
+		accessShell().accessMenuBar().accessItem(SWTTestApplication.MENU_ITEM_NOTIFICATION).select();
 	}
 
-	private ShellAccessor doWaitLogs() {
-		return accessShell("Log");
-	}
-
-	private void doCloseLogs(ShellAccessor about) {
-		about.close();
+	private void doCloseNotification() {
+		accessActiveShell().close();
 	}
 
 	private void doClose() {

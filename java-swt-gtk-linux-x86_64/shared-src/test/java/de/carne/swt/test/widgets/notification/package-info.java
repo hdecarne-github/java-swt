@@ -14,33 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.swt.test;
+@NonNullByDefault
+package de.carne.swt.test.widgets.notification;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import de.carne.boot.Application;
-import de.carne.swt.UserApplication;
-import de.carne.test.swt.DisableIfThreadNotSWTCapable;
-import de.carne.test.swt.tester.SWTTest;
-
-/**
- * Test {@linkplain UserApplication} class.
- */
-@DisableIfThreadNotSWTCapable
-class UserApplicationTest extends SWTTest {
-
-	@Test
-	void testUserApplication() {
-		Script script = script(Application::main);
-
-		script.add(this::doClose);
-		script.execute();
-		Assertions.assertTrue(script.passed());
-	}
-
-	private void doClose() {
-		accessShell().get().close();
-	}
-
-}
+import org.eclipse.jdt.annotation.NonNullByDefault;
