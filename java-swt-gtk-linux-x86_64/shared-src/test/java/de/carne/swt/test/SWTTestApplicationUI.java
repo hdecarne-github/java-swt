@@ -45,6 +45,7 @@ import de.carne.swt.widgets.MessageBoxBuilder;
 import de.carne.swt.widgets.PrintDialogBuilder;
 import de.carne.swt.widgets.ShellBuilder;
 import de.carne.swt.widgets.ShellUserInterface;
+import de.carne.swt.widgets.TabFolderBuilder;
 import de.carne.swt.widgets.ToolBarBuilder;
 import de.carne.swt.widgets.aboutinfo.AboutInfoDialog;
 import de.carne.swt.widgets.logview.LogViewDialog;
@@ -99,6 +100,11 @@ class SWTTestApplicationUI extends ShellUserInterface {
 
 		setupCoolBar(coolBarBuilder);
 		GridLayoutBuilder.data().align(SWT.FILL, SWT.TOP).grab(true, false).apply(coolBarBuilder);
+
+		TabFolderBuilder tabFolderBuilder = TabFolderBuilder.top(rootBuilder, SWT.NONE);
+
+		setupTabFolder(tabFolderBuilder);
+		GridLayoutBuilder.data().align(SWT.FILL, SWT.TOP).grab(true, false).apply(tabFolderBuilder);
 
 		ControlBuilder<RuntimeInfo> runtimeInfoBuilder = rootBuilder.addControlChild(RuntimeInfo.class, SWT.BORDER);
 
@@ -156,6 +162,12 @@ class SWTTestApplicationUI extends ShellUserInterface {
 		coolBarBuilder.addItem(SWT.NONE);
 		coolBarBuilder.withControl(coolBarBuilder.addButtonChild(SWT.PUSH).withText(SWTTestApplication.BUTTON_RIGHT)
 				.onSelected(this::onCoolButtonSelected));
+	}
+
+	private void setupTabFolder(TabFolderBuilder tabFolderBuilder) {
+		tabFolderBuilder.addItem(SWT.NONE).withText(SWTTestApplication.TAB_LEFT);
+		tabFolderBuilder.addItem(SWT.NONE).withText(SWTTestApplication.TAB_MIDDLE);
+		tabFolderBuilder.addItem(SWT.NONE).withText(SWTTestApplication.TAB_RIGHT);
 	}
 
 	private void onAboutSelected() {

@@ -55,7 +55,7 @@ public final class TabFolderBuilder extends CompositeBuilder<TabFolder> {
 	 * @param style The style of {@linkplain TabFolder} to create.
 	 * @return The new builder.
 	 */
-	public static TabFolderBuilder vertical(Supplier<? extends Composite> parent, int style) {
+	public static TabFolderBuilder top(Supplier<? extends Composite> parent, int style) {
 		return top(parent.get(), style);
 	}
 
@@ -77,7 +77,7 @@ public final class TabFolderBuilder extends CompositeBuilder<TabFolder> {
 	 * @param style The style of {@linkplain TabFolder} to create.
 	 * @return The new builder.
 	 */
-	public static TabFolderBuilder horizontal(Supplier<? extends Composite> parent, int style) {
+	public static TabFolderBuilder bottom(Supplier<? extends Composite> parent, int style) {
 		return bottom(parent.get(), style);
 	}
 

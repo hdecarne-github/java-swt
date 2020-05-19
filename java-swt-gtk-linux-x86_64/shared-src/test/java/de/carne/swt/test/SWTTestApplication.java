@@ -92,21 +92,34 @@ public class SWTTestApplication extends UserApplication implements ApplicationMa
 	public final static String TOOL_ITEM_PRINT = "Print";
 
 	/**
-	 * Left button test.
+	 * Left button text.
 	 */
 	public final static String BUTTON_LEFT = "Left button";
 	/**
-	 * Middle button test.
+	 * Middle button text.
 	 */
 	public final static String BUTTON_MIDDLE = "Middle button";
 	/**
-	 * Right button test.
+	 * Right button text.
 	 */
 	public final static String BUTTON_RIGHT = "Right button";
 	/**
-	 * Close button test.
+	 * Close button text.
 	 */
 	public final static String BUTTON_CLOSE = "Close";
+
+	/**
+	 * Left tab text.
+	 */
+	public final static String TAB_LEFT = "Left tab";
+	/**
+	 * Middle tab text.
+	 */
+	public final static String TAB_MIDDLE = "Middle tab";
+	/**
+	 * Right tab text.
+	 */
+	public final static String TAB_RIGHT = "Right tab";
 
 	@Override
 	public int run(String[] args) {
