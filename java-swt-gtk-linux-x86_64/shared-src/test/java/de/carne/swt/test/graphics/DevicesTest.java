@@ -27,7 +27,7 @@ import de.carne.test.swt.DisableIfThreadNotSWTCapable;
  * Test {@linkplain Devices} class.
  */
 @DisableIfThreadNotSWTCapable
-public class DevicesTest {
+class DevicesTest {
 
 	@Test
 	void testSafeDispose() {
