@@ -8,21 +8,11 @@ os:
 dist: bionic
 osx_image: xcode12
 
-services:
-  - xvfb
-
 env:
   JAVA_OPTS="-Xmx4g -Dfile.encoding=UTF-8"
   GRADLE_OPTS="-Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=hdecarne-github -Dsonar.login=$SONAR_TOKEN"
   BUILD_JDK="adopt@1.11.0-7"
   DEPLOY_OS_NAME="linux"
-  DBUS_SESSION_BUS_ADDRESS="/dev/null"
-
-addons:
-  apt:
-    packages:
-      - fluxbox
-      - imagemagick
 
 git:
   depth: false  
