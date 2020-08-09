@@ -7,6 +7,6 @@ jabba use $BUILD_JDK
 export JAVA_HOME="$HOME/.jabba/jdk/$BUILD_JDK"
 export PATH="$JAVA_HOME/bin:$PATH"
 
+sudo apt-get -y install xvfb
 sudo apt-get -y install fluxbox
 sudo apt-get -y install imagemagick
-export DBUS_SESSION_BUS_ADDRESS="/dev/null"
