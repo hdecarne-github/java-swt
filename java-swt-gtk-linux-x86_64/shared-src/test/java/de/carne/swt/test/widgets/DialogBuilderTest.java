@@ -16,6 +16,10 @@
  */
 package de.carne.swt.test.widgets;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.printing.PrinterData;
 import org.eclipse.swt.widgets.ToolBar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -47,26 +51,32 @@ class DialogBuilderTest extends SWTTest {
 	}
 
 	private void doMessageBox() {
+		mockMessageBox().offerResult(SWT.CANCEL);
 		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(0).select();
 	}
 
 	private void doColorDialog() {
+		mockColorDialog().offerResult((RGB) null);
 		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(1).select();
 	}
 
 	private void doDirectoryDialog() {
+		mockDirectoryDialog().offerResult((String) null);
 		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(2).select();
 	}
 
 	private void doFileDialog() {
+		mockFileDialog().offerResult((String) null);
 		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(3).select();
 	}
 
 	private void doFontDialog() {
+		mockFontDialog().offerResult((FontData) null);
 		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(4).select();
 	}
 
 	private void doPrintDialog() {
+		mockPrintDialog().offerResult((PrinterData) null);
 		accessShell().accessChild(ToolBarAccessor::new, ToolBar.class, 0).accessItem(5).select();
 	}
 
