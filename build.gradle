@@ -91,6 +91,7 @@ subprojects {
 			exclude(group: "org.eclipse.platform", module: 'org.eclipse.swt.${osgi.platform}')
 		}
 		implementation(group: "de.carne.common", name: "java-default", version: project.javaDefaultVersion)
+		testImplementation(group: "de.carne.common", name: "java-test", version: project.javaTestVersion)
 		testImplementation(group: "de.carne.common", name: "java-test-swt${platformSuffix}", version: project.javaTestSwtVersion)
 	}
 	
@@ -119,7 +120,6 @@ subprojects {
 			events "started", "failed", "passed", "skipped"
 			exceptionFormat "full"
 		}
-		jvmArgs "-javaagent:${classpath.find { it.name.contains('jmockit') }.absolutePath}"
 		enabled = project.name.endsWith(javatools.platform.swtToolkit)
 	}
 
