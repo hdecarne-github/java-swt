@@ -127,7 +127,7 @@ subprojects {
 	project.tasks["sonarqube"].enabled = test.enabled
 
 	jacoco {
-		toolVersion = "0.8.5"
+		toolVersion = project.jacocoVersion
 	}
 		
 	jacocoTestReport {
