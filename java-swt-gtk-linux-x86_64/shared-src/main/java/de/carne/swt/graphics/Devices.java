@@ -25,7 +25,7 @@ import org.eclipse.swt.graphics.Device;
 public final class Devices {
 
 	private Devices() {
-		// prevent instantiation
+		// Prevent instantiation
 	}
 
 	/**

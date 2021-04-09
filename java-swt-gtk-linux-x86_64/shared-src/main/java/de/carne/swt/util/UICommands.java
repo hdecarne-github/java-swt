@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.ToolItem;
 public final class UICommands {
 
 	private UICommands() {
-		// prevent instantiation
+		// Prevent instantiation
 	}
 
 	/**
