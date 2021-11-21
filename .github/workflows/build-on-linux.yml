@@ -23,4 +23,5 @@ jobs:
       - name: Init Build
         run: ./gradlew -s --refresh-dependencies clean classes testClasses
       - name: Run Build
-        run: ./gradlew -s build javadoc sonarqube
+        run: sudo apt-get install xvfb
+        run: xvfb-run --auto-servernum ./gradlew -s build javadoc sonarqube
